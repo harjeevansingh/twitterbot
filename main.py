@@ -51,10 +51,10 @@ def location():
         elif tweet.user.location != '':
             loc[tweet.user.location] = 1
 
-        if tweet.created_at in time.keys():
-            time[str(tweet.created_at)] += 1
+        if tweet.user.time_zone in time.keys():
+            time[str(tweet.user.time_zone)] += 1
         else:
-            time[str(tweet.user.created_at)] = 1
+            time[str(tweet.user.time_zone)] = 1
 
     print("\nNumber of times the languages used:")
     for (x, y) in lang.items():
