@@ -1,16 +1,14 @@
-### ACCESS TOKENS , CONSUMER KEY AND API_KEY(SENTIMENTS) HAVE BEEN REMOVED ####
-
 
 import tweepy, re, operator
 from paralleldots import set_api_key, sentiment
 
 # Authentication Consumer Key
-CONSUMER_KEY = ""
-CONSUMER_SECRET = ""
+CONSUMER_KEY = "xiW6mMJ9gk8kbpjtdON25yEfE"
+CONSUMER_SECRET = "zz9jVz1GXAiViowmqqMMUpZsHCEkvthmbhxo1iOQ2FqYSUXppT"
 
 # Authentication Access Tokens
-ACCESS_TOKEN = ""
-ACCESS_TOKEN_SECRET = ""
+ACCESS_TOKEN = "282487118-EhbdxPMP4aimPP2M9uRxXInbRfdEYzshVq9qE2jI"
+ACCESS_TOKEN_SECRET = "qHcJRImZmO7FaVvaT3hB6CNflNa3nHLhcwUXXFP8DYtCB"
 
 
 oauth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -20,16 +18,17 @@ api = tweepy.API(oauth)
 
 
 def get_tweet():
-    hash_tag = input("\nEnter the word without the hashtag")
+    hash_tag = input("Enter the word without the hashtag")
     hash_tag = "#" + hash_tag
-    tweets = api.search(hash_tag)
+    print(hash_tag)
+    tweets = api.search(q=hash_tag, count=200)
     return tweets
 
 
 def test_sentiments():
     list_sents = []
     tweets = get_tweet()
-    set_api_key("")
+    set_api_key("5Ilq8t88HXC0EYjVzpCDqqnQSlPJm5mJ9faJTnigwG4")
     for tweet in tweets:
         list_sents.append(sentiment(tweet.text))
     return list_sents
@@ -39,7 +38,10 @@ def location():
     lang = {}
     loc = {}
     time = {}
-    tweets = get_tweet()
+    hash_tag = input("Enter the word without the hashtag")
+    hash_tag = "#" + hash_tag
+    print(hash_tag)
+    tweets = api.search(q=hash_tag, count=200)
     for tweet in tweets:
         if tweet.user.lang in lang.keys():
             lang[tweet.user.lang] += 1
@@ -56,17 +58,26 @@ def location():
         else:
             time[str(tweet.user.time_zone)] = 1
 
-    print("\nNumber of times the languages used:")
-    for (x, y) in lang.items():
-        print("Language:%s \t Count:%d " % (x, y))
+    top_location = sorted(loc, key=loc.get, reverse=True)
+    top_timezones = sorted(time, key=time.get, reverse=True)
+    top_lang = sorted(lang, key=lang.get, reverse=True)
 
-    print("\nNumber of posts from different Timezones:")
-    for (x, y)in time.items():
-        print("%s : %d" % (x, y))
+    print("Top 5 Locations for this hashtag are:")
+    i = 0
+    for k in top_location[0:5]:
+        i += 1
+        print(i, k, loc[k])
 
-    print("\nLocations from where posts were updated:")
-    for (x, y) in loc.items():
-        print("%s : %d" % (x, y))
+    print("Top 5 timezones for this hashtag are:")
+    i = 0
+    for k in top_timezones[0:5]:
+        i += 1
+        print(i, k, time[k])
+    i = 0
+    print("Top 5 languages used:")
+    for k in top_lang[0:5]:
+        i += 1
+        print(i, k, lang[k])
 
 
 def tweet_match():
@@ -85,8 +96,8 @@ def tweet_match():
             modi += 1
 
     # showing the comparison
-    print("MOdi-"+ str(modi))
-    print("Trump-"+ str(trump))
+    print("MOdi-" + str(modi))
+    print("Trump-" + str(trump))
 
 
 def top_usage():
@@ -110,7 +121,7 @@ def top_usage():
                 dictt[word] = 1
 
     sorted_dict = sorted(dictt.items(), key=operator.itemgetter(1))
-    print("\nThe Top Ten Words Are: ")
+    print("The Top Ten Words Are: ")
     for i in range(-1, -11, -1):
         print(sorted_dict[i][0], " - ", sorted_dict[i][1])
 
@@ -127,14 +138,13 @@ def menu():
         # For tweets Retrieval
         if choice == "1":
             tweets = get_tweet()   # getting the tweets from the other function
-            print("\nFollowing tweets have been made by the people: \n")
+            print("Following tweets have been made by the people \n")
             for tweet in tweets:
                 print(tweet.text)
 
         # Count Followers
         elif choice == "2":
             tweets = get_tweet()
-            print("\nThe users along with the followers:")
             for tweet in tweets:
                 print("User : %s \t Followers:%s " % (tweet.user.name, tweet.user.followers_count))
             print("\n")
@@ -152,7 +162,7 @@ def menu():
                     n += 1
                 elif x["sentiment"] == "positive":
                     p += 1
-            print("Sentiment Result:\n")
+            print("Sentiment Result:\nWait for a minute(max 2 min xD)")
             print("Positive:%d \t Negative:%d \t Neutral:%d" % (p, n, nu))
 
         # Determine the location
@@ -176,5 +186,5 @@ def menu():
         elif choice == "8":
             show_menu = False
 
-
+            
 menu()
