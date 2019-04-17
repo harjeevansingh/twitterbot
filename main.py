@@ -3,12 +3,12 @@ import tweepy, re, operator
 from paralleldots import set_api_key, sentiment
 
 # Authentication Consumer Key
-CONSUMER_KEY = "xiW6mMJ9gk8kbpjtdON25yEfE"
-CONSUMER_SECRET = "zz9jVz1GXAiViowmqqMMUpZsHCEkvthmbhxo1iOQ2FqYSUXppT"
+CONSUMER_KEY = ""
+CONSUMER_SECRET = ""
 
 # Authentication Access Tokens
-ACCESS_TOKEN = "282487118-EhbdxPMP4aimPP2M9uRxXInbRfdEYzshVq9qE2jI"
-ACCESS_TOKEN_SECRET = "qHcJRImZmO7FaVvaT3hB6CNflNa3nHLhcwUXXFP8DYtCB"
+ACCESS_TOKEN = ""
+ACCESS_TOKEN_SECRET = ""
 
 
 oauth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
