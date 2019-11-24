@@ -28,7 +28,7 @@ def get_tweet():
 def test_sentiments():
     list_sents = []
     tweets = get_tweet()
-    set_api_key("5Ilq8t88HXC0EYjVzpCDqqnQSlPJm5mJ9faJTnigwG4")
+    set_api_key("")
     for tweet in tweets:
         list_sents.append(sentiment(tweet.text))
     return list_sents
